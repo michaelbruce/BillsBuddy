@@ -1,0 +1,25 @@
+[
+{
+    "id" : "BillsBuddy",
+    "caption" : "BillsBuddy",
+    "children" :
+    [
+        {
+            "caption" : "Deploy File",
+            "command" : "cnpremailer"
+        },
+        {
+            "caption" : "Run Tests in File",
+            "command" : "cnpremailer"
+        },
+        {
+            "caption" : "Run Current Method in Test",
+            "command" : "cnpremailer"
+        },
+        {
+            "caption" : "Configure Settings",
+            "command" : "cnpremailer"
+        }
+    ]
+}
+]
