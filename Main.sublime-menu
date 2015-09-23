@@ -6,19 +6,20 @@
     [
         {
             "caption" : "Deploy File",
-            "command" : "cnpremailer"
+            "command" : "bill_save"
         },
         {
             "caption" : "Run Tests in File",
-            "command" : "cnpremailer"
+            "command" : "bill_test"
         },
         {
             "caption" : "Run Current Method in Test",
-            "command" : "cnpremailer"
+            "command" : "bill_test_single"
         },
         {
             "caption" : "Configure Settings",
-            "command" : "cnpremailer"
+            "command": "open_file",
+            "args": {"file": "${packages}/BillsBuddy/billsbuddy.sublime-settings"}, 
         }
     ]
 }

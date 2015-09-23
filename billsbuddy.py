@@ -6,12 +6,11 @@ home_dir = os.path.expanduser('~')
 
 # TODO use os.putenv to find & set JAVAHOME?
 # TODO find tooling-force jar with a methid - os.listdir('.')
+# TODO create response file from current file name
+# TODO end current tooling-force process if call is used again.
 
 class ToolingForce:
     def call(args):
-        # TODO create response file from current file name
-        # TODO end current tooling-force process if call is used again.
-        # TODO paths and spaces...
         command_args = ['java', '-jar', 'tooling-force.com-0.3.4.2.jar',
                         '--config=' + settings.get('bb_config'),
                         '--projectPath=' + settings.get('bb_path'),
@@ -31,10 +30,27 @@ class ToolingForce:
             except KeyboardInterrupt:
                 break
 
-class BillHelpCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        ToolingForce.call('--help')
-
 class BillSaveCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         ToolingForce.call('--action=deploySpecificFiles')
+
+class BillTestCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        print(self.view.file_name())
+        ToolingForce.call('--action=runTestsTooling')
+
+class BillTestSingleCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        print(self.get_current_function(self.view))
+        ToolingForce.call('--action=runTestsTooling')
+
+    def get_current_function(self, view):
+            sel = view.sel()[0]
+            functionRegs = view.find_by_selector('entity.name.function')
+            cf = None
+            for r in reversed(functionRegs):
+                if r.a < sel.a:
+                    cf = view.substr(r)
+                    break
+
+            return cf
