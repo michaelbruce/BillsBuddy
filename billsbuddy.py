@@ -1,8 +1,8 @@
-import sublime, sublime_plugin, os
+import sublime, sublime_plugin, os, subprocess
 
 settings = sublime.load_settings('billsbuddy.sublime-settings')
-plugin_path = sublime.packages_path()
-home_dir = os.path.expansuser('~')
+plugin_path = sublime.packages_path() + '/BillsBuddy'
+home_dir = os.path.expanduser('~')
 
 # TODO use os.putenv to find & set JAVAHOME?
 # TODO find tooling-force jar with a methid - os.listdir('.')
@@ -11,56 +11,30 @@ class ToolingForce:
     def call(args):
         # TODO create response file from current file name
         # TODO end current tooling-force process if call is used again.
-        # TODO how to reference $HOME in python?
-        p = os.popen("echo hiiii")
-        os.popen(("java -jar tooling-force.com-0.3.4.2.jar"
-            " --config=" + home_dir + settings.get('bb_config')
-            " --projectPath=" + home_dir + settings.get('bb_path')
-            " --responseFilePath=/tmp/billResponseFile"
-            " --ignoreConflicts=true"
-            " --pollWaitMillis=1000")
-        #now wait & print
+        # TODO paths and spaces...
+        command_args = ['java', '-jar', 'tooling-force.com-0.3.4.2.jar',
+                        '--config=' + settings.get('bb_config'),
+                        '--projectPath=' + settings.get('bb_path'),
+                        '--responseFilePath=/tmp/billResponseFile',
+                        '--ignoreConflicts=true',
+                        '--pollWaitMillis=1000']
+        command_args.extend(args.split())
+        print('Debug: ' + ' '.join(command_args))
+        p = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=plugin_path)
+
+        while True:
+            try:
+                buf = p.stdout.readline()
+                if not buf:
+                    break
+                print(buf.rstrip().decode("utf-8")),
+            except KeyboardInterrupt:
+                break
 
 class BillHelpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         ToolingForce.call('--help')
-        # self.view.insert(edit, 0, "Hello, World!")
 
-class BillSaveCeommand(sublime_plugin.TextCommand):
+class BillSaveCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        view = sublime.Window.active_view(sublime.active_window())
-        # print view.run_command("delete_current_file")
-        print(os.popen(("java -jar ' . $HOME . '/dotfiles/tooling-force.com-0.3.4.2.jar"
-                        " --action=deploySpecificFiles"
-                        "--config=' . $HOME . '/notes/SingletrackDev.properties"
-                        "--projectPath=' . $HOME . '/Workspace/Singletrack-Core/SingletrackDev"
-                        "--responseFilePath=/tmp/responseFile"
-                        "--specificFiles=/tmp/currentFile"
-                        "--ignoreConflicts=true"
-                        "--pollWaitMillis=1000")).read())
-
-# function! ApexDeployCurrent()
-#   let term = GetTerm()
-#   let newFile = substitute(expand('%'), $HOME . 'Workspace/Singletrack-Core/SingletrackDev','','')
-#   exec ':!echo -e "' . newFile . '\n' . newFile . '-meta.xml" > /tmp/currentFile'
-#   exec term . 'java -jar ' . $HOME . '/dotfiles/tooling-force.com-0.3.4.0.jar
-#         \ --action=deploySpecificFiles
-#         \ --config=' . $HOME . '/notes/SingletrackDev.properties
-#         \ --projectPath=' . $HOME . '/Workspace/Singletrack-Core/SingletrackDev
-#         \ --responseFilePath=/tmp/responseFile
-#         \ --specificFiles=/tmp/currentFile
-#         \ --ignoreConflicts=true
-#         \ --pollWaitMillis=1000'
-# endfunction
-
-# Code snippet from DMoss
-# import sys
-#
-# while True:
-#     try:
-#         buf = sys.stdin.readline()
-#         if not buf:
-#             break
-#         print buf,
-#         except KeyboardInterrupt:
-#             break
+        ToolingForce.call('--action=deploySpecificFiles')
