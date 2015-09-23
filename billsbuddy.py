@@ -36,13 +36,14 @@ class BillSaveCommand(sublime_plugin.TextCommand):
 
 class BillTestCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        print(self.view.file_name())
-        ToolingForce.call('--action=runTestsTooling')
+        ToolingForce.call('--action=runTestsTooling --async=true --testsToRun='
+                + os.path.splitext(os.path.basename(self.view.file_name()))[0])
 
 class BillTestSingleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        print(self.get_current_function(self.view))
-        ToolingForce.call('--action=runTestsTooling')
+        ToolingForce.call('--action=runTestsTooling --async=true --testsToRun='
+                + os.path.splitext(os.path.basename(self.view.file_name()))[0]
+                + '.' + self.get_current_function(self.view))
 
     def get_current_function(self, view):
             sel = view.sel()[0]
@@ -52,5 +53,4 @@ class BillTestSingleCommand(sublime_plugin.TextCommand):
                 if r.a < sel.a:
                     cf = view.substr(r)
                     break
-
             return cf
