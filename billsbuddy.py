@@ -52,3 +52,15 @@ class BillSaveCeommand(sublime_plugin.TextCommand):
 #         \ --ignoreConflicts=true
 #         \ --pollWaitMillis=1000'
 # endfunction
+
+# Code snippet from DMoss
+# import sys
+#
+# while True:
+#     try:
+#         buf = sys.stdin.readline()
+#         if not buf:
+#             break
+#         print buf,
+#         except KeyboardInterrupt:
+#             break
