@@ -2,6 +2,9 @@
 // Where ever you keep your BB projects
 "bb_path" : "/Users/mikepjb/Workspace/Singletrack-Core/SingletrackDev",
 
+// Your Salesforce Config .properties file
+"bb_config" : "~/notes/SingletrackDev.properties"
+
 //** You need Java 7 to run this"
 "bb_java" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home"
 }
