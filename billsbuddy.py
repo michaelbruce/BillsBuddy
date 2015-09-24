@@ -8,14 +8,15 @@ home_dir = os.path.expanduser('~')
 # TODO find tooling-force jar with a methid - os.listdir('.')
 # TODO create response file from current file name
 # TODO end current tooling-force process if call is used again.
+# TODO display console when running, auto close after X seconds if successful
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
         super(ToolingForce, self).__init__()
+        sublime.active_window().run_command("show_panel", {"panel": "console"})
         self.args = args
 
     def run(self):
-        print('got here')
         command_args = ['java', '-jar', 'tooling-force.com-0.3.4.2.jar',
                         '--config=' + settings.get('bb_config'),
                         '--projectPath=' + settings.get('bb_path'),
@@ -27,29 +28,31 @@ class ToolingForce(threading.Thread):
         p = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=plugin_path)
 
         while True:
-            try:
-                buf = p.stdout.readline()
-                if not buf:
-                    break
-                print(buf.rstrip().decode("utf-8")),
-            except KeyboardInterrupt:
+            buf = p.stdout.readline()
+            if not buf:
                 break
+            print(buf.rstrip().decode("utf-8")),
 
 class BillSaveCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        print('=== Pushing to <org_name> ===')
         ToolingForce('--action=deploySpecificFiles')
 
 class BillTestCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
+        print('=== Running test ' + filename + ' to <org_name> ===')
         t = ToolingForce('--action=runTestsTooling --async=true --testsToRun='
-                + os.path.splitext(os.path.basename(self.view.file_name()))[0])
+                + filename)
         t.start()
 
 class BillTestSingleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
+        method_name = self.get_current_function(self.view)
+        print('=== Running test method ' + method_name + ' to <org_name> ===')
         t = ToolingForce('--action=runTestsTooling --async=true --testsToRun='
-                + os.path.splitext(os.path.basename(self.view.file_name()))[0]
-                + '.' + self.get_current_function(self.view))
+                + filename + '.' + method_name)
         t.start()
 
     def get_current_function(self, view):
