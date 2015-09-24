@@ -1,0 +1,4 @@
+[
+  {  "keys": ["ctrl+shift+a"], "command": "bill_test" },
+  {  "keys": ["ctrl+shift+s"], "command": "bill_test_single" },
+]

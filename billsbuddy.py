@@ -1,4 +1,5 @@
 import sublime, sublime_plugin, os, subprocess, threading
+import BillsBuddy.util as util
 
 settings = sublime.load_settings('billsbuddy.sublime-settings')
 plugin_path = sublime.packages_path() + '/BillsBuddy'
@@ -64,3 +65,15 @@ class BillTestSingleCommand(sublime_plugin.TextCommand):
                     cf = view.substr(r)
                     break
             return cf
+
+# TODO get actions working on save
+# TODO make sure user won't lose focus when this happens
+# #handles compiling to server on save
+# class RemoteEdit(sublime_plugin.EventListener):
+#     def on_post_save_async(self, view):
+#         if settings.get('bb_compile_on_save') == True and util.is_mm_file() == True:
+#             params = {
+#                 "files" : [util.get_active_file()]
+#             }
+#             mm.call('compile', context=view, params=params)
+#

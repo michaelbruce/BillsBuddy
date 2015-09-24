@@ -6,5 +6,11 @@
 "bb_config" : "/Users/Michael/notes/SingletrackDev.properties",
 
 //** You need Java 7 to run this"
-"bb_java" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home"
+"bb_java" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home",
+
+"bb_deploy_on_save" : "true",
+"bb_test_on_save" : "false",
+"bb_test_single_on_save" : "true",
+
+"bb_apex_file_extensions" : ""
 }
