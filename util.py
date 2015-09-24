@@ -22,3 +22,13 @@ def get_active_file():
     except Exception:
         return ''
 
+def get_current_function(view):
+        sel = view.sel()[0]
+        functionRegs = view.find_by_selector('entity.name.function')
+        cf = None
+        for r in reversed(functionRegs):
+            if r.a < sel.a:
+                cf = view.substr(r)
+                break
+        return cf
+

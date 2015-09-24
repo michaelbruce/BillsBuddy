@@ -1,4 +1,6 @@
 [
-  {  "keys": ["ctrl+shift+a"], "command": "bill_test" },
-  {  "keys": ["ctrl+shift+s"], "command": "bill_test_single" },
+  { "keys": ["ctrl+shift+a"], "command": "bill_test" },
+  { "keys": ["ctrl+shift+s"], "command": "bill_test_single" },
+  { "keys": ["ctrl+shift+d"], "command": "bill_deploy" },
+  { "keys": ["super+shift+,"], "command": "open_file", "args": {"file": "${packages}/BillsBuddy/billsbuddy.sublime-settings"} },
 ]

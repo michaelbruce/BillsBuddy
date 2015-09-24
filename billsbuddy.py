@@ -10,6 +10,7 @@ home_dir = os.path.expanduser('~')
 # TODO create response file from current file name
 # TODO end current tooling-force process if call is used again.
 # TODO display console when running, auto close after X seconds if successful
+# TODO implement your own debug panel
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
@@ -34,7 +35,7 @@ class ToolingForce(threading.Thread):
                 break
             print(buf.rstrip().decode("utf-8")),
 
-class BillSaveCommand(sublime_plugin.TextCommand):
+class BillDeployCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         print('=== Pushing to <org_name> ===')
         ToolingForce('--action=deploySpecificFiles')
@@ -50,21 +51,11 @@ class BillTestCommand(sublime_plugin.TextCommand):
 class BillTestSingleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
-        method_name = self.get_current_function(self.view)
+        method_name = util.get_current_function(self.view)
         print('=== Running test method ' + method_name + ' to <org_name> ===')
         t = ToolingForce('--action=runTestsTooling --async=true --testsToRun='
                 + filename + '.' + method_name)
         t.start()
-
-    def get_current_function(self, view):
-            sel = view.sel()[0]
-            functionRegs = view.find_by_selector('entity.name.function')
-            cf = None
-            for r in reversed(functionRegs):
-                if r.a < sel.a:
-                    cf = view.substr(r)
-                    break
-            return cf
 
 # TODO get actions working on save
 # TODO make sure user won't lose focus when this happens

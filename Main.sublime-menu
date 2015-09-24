@@ -6,7 +6,7 @@
     [
         {
             "caption" : "Deploy File",
-            "command" : "bill_save"
+            "command" : "bill_deploy"
         },
         {
             "caption" : "Run Tests in File",
@@ -19,7 +19,7 @@
         {
             "caption" : "Configure Settings",
             "command": "open_file",
-            "args": {"file": "${packages}/BillsBuddy/billsbuddy.sublime-settings"}, 
+            "args": {"file": "${packages}/BillsBuddy/billsbuddy.sublime-settings"},
         }
     ]
 }
