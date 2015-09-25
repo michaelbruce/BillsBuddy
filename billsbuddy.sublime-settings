@@ -1,5 +1,12 @@
 {
 // Where ever you keep your BB projects
+"bb_projects": [
+    {"path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
+     "username" : ""},
+    {"path" : "/Users/Michael/Workspace/Singletrack-Core/Singletrack-Revenue-And-Orders"},
+],
+
+// This is an older setting included whilst the above is being worked on.
 "bb_path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
 
 // Your Salesforce Config .properties file

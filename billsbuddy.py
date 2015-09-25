@@ -5,12 +5,22 @@ settings = sublime.load_settings('billsbuddy.sublime-settings')
 plugin_path = sublime.packages_path() + '/BillsBuddy'
 home_dir = os.path.expanduser('~')
 
+# TODO include apex/vf page syntax
+# TODO include SuperAnt - optionsin menu
+# TODO handle loss of connection/no java/no jar
+# TODO pull down objects/by search
+# TODO allow for multiple bb_paths - requires system/user settings file seperation first
+# TODO cmd + t searches all paths - include SingletrackAssets - deployResources option?
+# TODO have option to show debug panel or not, display message in status bar e.g when sublime is querying for install packages
+# TODO include default HTML/Apex syntax
+# TODO download latest tooling force if missing + update option + hot update like chrome?
 # TODO use os.putenv to find & set JAVAHOME?
 # TODO find tooling-force jar with a methid - os.listdir('.')
 # TODO create response file from current file name
 # TODO end current tooling-force process if call is used again.
 # TODO display console when running, auto close after X seconds if successful
 # TODO implement your own debug panel
+# TODO option to disable the menu - get bb completely out of your way.
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
