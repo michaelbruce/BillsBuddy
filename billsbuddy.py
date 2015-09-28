@@ -1,9 +1,6 @@
 import sublime, sublime_plugin, os, subprocess, threading
 import BillsBuddy.util as util
 
-# home_dir = os.path.expanduser('~')
-
-# TODO config causes NoneType error until loaded (by saving billsbuddy.py)
 # TODO include apex/vf page syntax
 # TODO include SuperAnt - optionsin menu
 # TODO handle loss of connection/no java/no jar
