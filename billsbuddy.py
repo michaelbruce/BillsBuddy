@@ -1,10 +1,9 @@
 import sublime, sublime_plugin, os, subprocess, threading
 import BillsBuddy.util as util
 
-settings = sublime.load_settings('billsbuddy.sublime-settings')
-plugin_path = sublime.packages_path() + '/BillsBuddy'
-home_dir = os.path.expanduser('~')
+# home_dir = os.path.expanduser('~')
 
+# TODO config causes NoneType error until loaded (by saving billsbuddy.py)
 # TODO include apex/vf page syntax
 # TODO include SuperAnt - optionsin menu
 # TODO handle loss of connection/no java/no jar
@@ -24,20 +23,22 @@ home_dir = os.path.expanduser('~')
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
+        self.settings = sublime.load_settings('billsbuddy.sublime-settings')
+        self.plugin_path = sublime.packages_path() + '/BillsBuddy'
         super(ToolingForce, self).__init__()
         sublime.active_window().run_command("show_panel", {"panel": "console"})
         self.args = args
 
     def run(self):
         command_args = ['java', '-jar', 'tooling-force.com-0.3.4.2.jar',
-                        '--config=' + settings.get('bb_config'),
-                        '--projectPath=' + settings.get('bb_path'),
+                        '--config=' + self.settings.get('bb_config'),
+                        '--projectPath=' + self.settings.get('bb_path'),
                         '--responseFilePath=/tmp/billResponseFile',
                         '--ignoreConflicts=true',
                         '--pollWaitMillis=1000']
         command_args.extend(self.args.split())
         print('Debug: ' + ' '.join(command_args))
-        p = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=plugin_path)
+        p = subprocess.Popen(command_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=self.plugin_path)
 
         while True:
             buf = p.stdout.readline()
