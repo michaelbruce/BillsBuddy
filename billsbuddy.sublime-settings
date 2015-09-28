@@ -1,10 +1,10 @@
 {
 // Where ever you keep your BB projects
-"bb_projects": [
-    {"path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
-     "username" : ""},
-    {"path" : "/Users/Michael/Workspace/Singletrack-Core/Singletrack-Revenue-And-Orders"},
-],
+// "bb_projects": [
+//     {"path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
+//      "username" : ""},
+//     {"path" : "/Users/Michael/Workspace/Singletrack-Core/Singletrack-Revenue-And-Orders"},
+// ],
 
 // This is an older setting included whilst the above is being worked on.
 "bb_path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
@@ -15,9 +15,9 @@
 //** You need Java 7 to run this"
 "bb_java" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home",
 
-"bb_deploy_on_save" : "true",
-"bb_test_on_save" : "false",
-"bb_test_single_on_save" : "true",
+// "bb_deploy_on_save" : "true",
+// "bb_test_on_save" : "false",
+// "bb_test_single_on_save" : "true",
 
-"bb_apex_file_extensions" : ""
+"bb_apex_file_extensions" : ".cls"
 }

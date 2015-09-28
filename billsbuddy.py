@@ -61,11 +61,22 @@ class BillTestCommand(sublime_plugin.TextCommand):
 class BillTestSingleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
-        method_name = util.get_current_function(self.view)
+        method_name = self.get_current_function(self.view)
         print('=== Running test method ' + method_name + ' to <org_name> ===')
         t = ToolingForce('--action=runTestsTooling --async=true --testsToRun='
                 + filename + '.' + method_name)
         t.start()
+
+    def get_current_function(self, view):
+            sel = view.sel()[0]
+            functionRegs = view.find_by_selector('entity.name.function')
+            cf = None
+            for r in reversed(functionRegs):
+                if r.a < sel.a:
+                    cf = view.substr(r)
+                    break
+            return cf
+
 
 # TODO get actions working on save
 # TODO make sure user won't lose focus when this happens
