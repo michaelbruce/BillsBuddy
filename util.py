@@ -16,6 +16,15 @@
 #         pass
 #     return False
 
+def get_file_extension(filename=None):
+    try :
+        if not filename: filename = get_active_file()
+        fn, ext = os.path.splitext(filename)
+        return ext
+    except:
+        pass
+    return None
+
 def get_active_file():
     try:
         return sublime.active_window().active_view().file_name()

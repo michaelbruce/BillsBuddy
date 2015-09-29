@@ -1,22 +1,13 @@
 import sublime, sublime_plugin, os, subprocess, threading
 import BillsBuddy.util as util
 
-# TODO include apex/vf page syntax
+# TODO print responseFile too! - code written, untested
+# TODO include apex/vf page syntax - WIP, see commented code
 # TODO include SuperAnt - optionsin menu
 # TODO handle loss of connection/no java/no jar
-# TODO pull down objects/by search
 # TODO allow for multiple bb_paths - requires system/user settings file seperation first
-# TODO cmd + t searches all paths - include SingletrackAssets - deployResources option?
-# TODO have option to show debug panel or not, display message in status bar e.g when sublime is querying for install packages
-# TODO include default HTML/Apex syntax
 # TODO download latest tooling force if missing + update option + hot update like chrome?
-# TODO use os.putenv to find & set JAVAHOME?
 # TODO find tooling-force jar with a methid - os.listdir('.')
-# TODO create response file from current file name
-# TODO end current tooling-force process if call is used again.
-# TODO display console when running, auto close after X seconds if successful
-# TODO implement your own debug panel
-# TODO option to disable the menu - get bb completely out of your way.
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
@@ -42,6 +33,9 @@ class ToolingForce(threading.Thread):
             if not buf:
                 break
             print(buf.rstrip().decode("utf-8")),
+
+        print(open('/tmp/billResponseFile','r'))
+
 
 class BillDeployCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -75,6 +69,17 @@ class BillTestSingleCommand(sublime_plugin.TextCommand):
                     break
             return cf
 
+
+# WIP
+# class SyntaxHandler(sublime_plugin.EventListener):
+#     ext = util.get_file_extension(fn)
+#     try:
+#         if ext == '.cls' or ext == '.trigger':
+#             view.set_syntax_file(os.path.join("Packages","Java","Java.tmLanguage"))
+#         elif ext == '.page' or ext == '.component':
+#             view.set_syntax_file(os.path.join("Packages","HTML","HTML.tmLanguage"))
+#     except:
+#         pass
 
 # TODO get actions working on save
 # TODO make sure user won't lose focus when this happens
