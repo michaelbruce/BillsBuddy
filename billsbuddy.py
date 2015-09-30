@@ -2,11 +2,11 @@ import sublime, sublime_plugin, os, subprocess, threading
 from os.path import expanduser
 from BillsBuddy import util
 
-class ToolingForce(threading.Thread):
+class ToolingForceWrapper(threading.Thread):
     def __init__(self, args):
         self.settings = sublime.load_settings('billsbuddy.sublime-settings')
         self.plugin_path = sublime.packages_path() + '/BillsBuddy'
-        super(ToolingForce, self).__init__()
+        super(ToolingForceWrapper, self).__init__()
         sublime.active_window().run_command("show_panel", {"panel": "console"})
         self.args = args
 
@@ -30,13 +30,12 @@ class ToolingForce(threading.Thread):
 
         print(open('/tmp/billResponseFile','r').read())
 
-
 class BillDeployCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         filename = os.path.basename(util.get_active_file())
         print('=== Pushing ' + filename + ' to SingletrackDev ===')
         self.create_description_file()
-        ToolingForce('--action=deploySpecificFiles --specificFiles=/tmp/currentFile').start()
+        ToolingForceWrapper('--action=deploySpecificFiles --specificFiles=/tmp/currentFile').start()
 
     def create_description_file(self):
         filename = util.get_active_file().split('SingletrackDev/')[1]
@@ -47,7 +46,7 @@ class BillTestCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         filename = os.path.splitext(os.path.basename(util.get_active_file()))[0]
         print('=== Running test ' + filename + ' to SingletrackDev ===')
-        ToolingForce('--action=runTestsTooling --async=true --testsToRun='
+        ToolingForceWrapper('--action=runTestsTooling --async=true --testsToRun='
                      + filename).start()
 
 class BillTestSingleCommand(sublime_plugin.TextCommand):
@@ -55,8 +54,8 @@ class BillTestSingleCommand(sublime_plugin.TextCommand):
         filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
         method_name = self.get_current_function(self.view)
         print('=== Running test method ' + method_name + ' to SingletrackDev ===')
-        ToolingForce('--action=runTestsTooling --async=true --testsToRun='
-                + filename + '.' + method_name).start()
+        ToolingForceWrapper('--action=runTestsTooling --async=true --testsToRun='
+                     + filename + '.' + method_name).start()
 
     def get_current_function(self, view):
             sel = view.sel()[0]
@@ -67,6 +66,3 @@ class BillTestSingleCommand(sublime_plugin.TextCommand):
                     cf = view.substr(r)
                     break
             return cf
-
-# Uses users bb_projects
-class ProjectCoordinator
