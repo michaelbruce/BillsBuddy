@@ -1,20 +1,3 @@
-# def is_salesforce_file(filename=None):
-#     try:
-#         if is_mm_project():
-#             if not filename:
-#                 filename = get_active_file()
-#             project_directory = mm_project_directory(sublime.active_window())
-#             if os.path.join(project_directory,"src","documents") in filename:
-#                 return True
-#             if os.path.exists(filename) and os.path.join(project_directory,"src") in filename:
-#                 valid_file_extensions = settings.get("bb_apex_file_extensions", [])
-#                 if get_file_extension(filename) in valid_file_extensions and 'apex-scripts' not in get_active_file():
-#                     return True
-#                 elif "-meta.xml" in filename:
-#                     return True
-#     except Exception as e:
-#         pass
-#     return False
 import sublime
 import os
 import subprocess, json
@@ -22,7 +5,6 @@ from urllib.request import urlopen
 
 packages_path = sublime.packages_path()
 bills_path = packages_path + '/BillsBuddy/'
-
 
 def get_file_extension(filename=None):
     try :
@@ -50,20 +32,16 @@ def get_current_function(view):
         return cf
 
 def has_tooling_force():
-    print('hiii')
-    print(os.getcwd())
-    print('bills path: ' + str(bills_path))
     if not os.path.isfile(bills_path + 'tooling-force.jar'):
-        print("location:" + str(os.getcwd()))
         get_tooling_force()
 
 def get_tooling_force():
-    print("Getting latest tooling-force.com release link from github...")
+    print("Getting latest tooling-force.com release from github...")
 
-    proc = subprocess.Popen(["curl", "https://api.github.com/repos/neowit/tooling-force.com/releases"], stdout=subprocess.PIPE)
+    proc = subprocess.Popen(["curl",
+        "https://api.github.com/repos/neowit/tooling-force.com/releases"],
+        stdout=subprocess.PIPE)
     (out, err) = proc.communicate()
-
-    print("Downloading...")
 
     url = (json.loads(out.decode())[0]['assets'][0]['browser_download_url'])
     file_name = 'tooling-force.jar'
