@@ -3,9 +3,6 @@ import os
 import subprocess, json
 from urllib.request import urlopen
 
-packages_path = sublime.packages_path()
-bills_path = packages_path + '/BillsBuddy/'
-
 def get_file_extension(filename=None):
     try :
         if not filename: filename = get_active_file()
@@ -32,7 +29,7 @@ def get_current_function(view):
         return cf
 
 def has_tooling_force():
-    if not os.path.isfile(bills_path + 'tooling-force.jar'):
+    if not os.path.isfile(os.path.join(sublime.packages_path(), 'BillsBuddy', 'tooling-force.jar')):
         get_tooling_force()
 
 def get_tooling_force():
@@ -46,7 +43,7 @@ def get_tooling_force():
     url = (json.loads(out.decode())[0]['assets'][0]['browser_download_url'])
     file_name = 'tooling-force.jar'
     u = urlopen(url)
-    f = open(bills_path + file_name, 'wb')
+    f = open(os.path.join(sublime.packages_path(), 'BillsBuddy', 'tooling-force.jar'), 'wb')
     meta = u.info()
     file_size = int(meta['Content-Length'])
     print("Downloading: %s Bytes: %s" % (file_name, file_size))

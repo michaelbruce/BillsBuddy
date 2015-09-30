@@ -1,28 +1,33 @@
 {
-// Where ever you keep your BB projects
-"bb_projects": [
-    {"path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
-     "username" : "",
-     "password" : "",
-     "security_token" : ""},
-    {"path" : "/Users/Michael/Workspace/Singletrack-Core/Singletrack-Revenue-And-Orders",
-     "username" : "",
-     "password" : "",
-     "security_token" : ""},
-],
-
 // This is an older setting included whilst the above is being worked on.
 "bb_path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
 
 // Your Salesforce Config .properties file
 "bb_config" : "/Users/Michael/notes/SingletrackDev.properties",
+// This should be a text file with the following format:
+// sf.username = username@companyname.com
+// sf.password = password_with_security_token
+// sf.serverurl = https://login.salesforce.com
 
-//** You need Java 7 to run this"
+// You need Java 7 to run this"
 "bb_java" : "/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home",
 
+"bb_apex_file_extensions" : ".cls"
+
+// NOT IMPLEMENTED
+//  Where ever you keep your BB projects
+// "bb_projects": [
+//     {"path" : "/Users/Michael/Workspace/Singletrack-Core/SingletrackDev",
+//      "username" : "",
+//      "password" : "",
+//      "security_token" : ""},
+//     {"path" : "/Users/Michael/Workspace/Singletrack-Core/Singletrack-Revenue-And-Orders",
+//      "username" : "",
+//      "password" : "",
+//      "security_token" : ""},
+// ],
 // "bb_deploy_on_save" : "true",
 // "bb_test_on_save" : "false",
 // "bb_test_single_on_save" : "true",
 
-"bb_apex_file_extensions" : ".cls"
 }
