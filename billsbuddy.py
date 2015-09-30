@@ -1,4 +1,5 @@
 import sublime, sublime_plugin, os, subprocess, threading
+from os.path import expanduser
 from BillsBuddy import util
 
 class ToolingForce(threading.Thread):
@@ -12,8 +13,8 @@ class ToolingForce(threading.Thread):
     def run(self):
         util.has_tooling_force()
         command_args = ['java', '-jar', 'tooling-force.jar',
-                        '--config=' + self.settings.get('bb_config'),
-                        '--projectPath=' + self.settings.get('bb_path'),
+                        '--config=' + expanduser(self.settings.get('bb_config')),
+                        '--projectPath=' + expanduser(self.settings.get('bb_path')),
                         '--responseFilePath=/tmp/billResponseFile',
                         '--ignoreConflicts=true',
                         '--pollWaitMillis=1000']
