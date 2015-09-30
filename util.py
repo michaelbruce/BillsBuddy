@@ -70,7 +70,7 @@ def get_tooling_force():
     u = urlopen(url)
     f = open(bills_path + file_name, 'wb')
     meta = u.info()
-    file_size = int(meta.getheaders("Content-Length")[0])
+    file_size = int(meta['Content-Length'])
     print("Downloading: %s Bytes: %s" % (file_name, file_size))
 
     file_size_dl = 0

@@ -10,6 +10,7 @@ import BillsBuddy.util as util
 # TODO download latest tooling force if missing + update option + hot update like chrome?
 # TODO find tooling-force jar with a methid - os.listdir('.')
 # TODO downloader must be threaded too but hold the application until complete..
+# TODO invalid/corrupt jar file...
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
