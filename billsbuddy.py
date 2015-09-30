@@ -21,6 +21,7 @@ class ToolingForce(threading.Thread):
         self.args = args
 
     def run(self):
+        util.has_tooling_force()
         command_args = ['java', '-jar', 'tooling-force.jar',
                         '--config=' + self.settings.get('bb_config'),
                         '--projectPath=' + self.settings.get('bb_path'),
@@ -55,7 +56,6 @@ class BillTestCommand(sublime_plugin.TextCommand):
 
 class BillTestSingleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        util.has_tooling_force()
         filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
         method_name = self.get_current_function(self.view)
         print('=== Running test method ' + method_name + ' to <org_name> ===')
