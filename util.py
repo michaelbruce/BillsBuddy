@@ -17,6 +17,12 @@
 #     return False
 import sublime
 import os
+import subprocess, json
+from urllib.request import urlopen
+
+packages_path = sublime.packages_path()
+bills_path = packages_path + '/BillsBuddy/'
+
 
 def get_file_extension(filename=None):
     try :
@@ -44,12 +50,14 @@ def get_current_function(view):
         return cf
 
 def has_tooling_force():
-    if not os.path.isfile('tooling-force.com.jar'):
-        print('No JAR available')
+    print('hiii')
+    print(os.getcwd())
+    print('bills path: ' + str(bills_path))
+    if not os.path.isfile(bills_path + 'tooling-force.jar'):
+        print("location:" + str(os.getcwd()))
+        get_tooling_force()
 
 def get_tooling_force():
-    import subprocess, json, urllib2
-
     print("Getting latest tooling-force.com release link from github...")
 
     proc = subprocess.Popen(["curl", "https://api.github.com/repos/neowit/tooling-force.com/releases"], stdout=subprocess.PIPE)
@@ -57,10 +65,10 @@ def get_tooling_force():
 
     print("Downloading...")
 
-    url = (json.loads(out)[0]['assets'][0]['browser_download_url'])
-    file_name = url.split('/')[-1]
-    u = urllib2.urlopen(url)
-    f = open(file_name, 'wb')
+    url = (json.loads(out.decode())[0]['assets'][0]['browser_download_url'])
+    file_name = 'tooling-force.jar'
+    u = urlopen(url)
+    f = open(bills_path + file_name, 'wb')
     meta = u.info()
     file_size = int(meta.getheaders("Content-Length")[0])
     print("Downloading: %s Bytes: %s" % (file_name, file_size))

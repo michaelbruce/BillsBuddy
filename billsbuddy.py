@@ -1,6 +1,7 @@
 import sublime, sublime_plugin, os, subprocess, threading
 import BillsBuddy.util as util
 
+# TODO fix ~ and absolute file paths
 # TODO print responseFile too! - code written, untested
 # TODO include apex/vf page syntax - WIP, see commented code
 # TODO include SuperAnt - optionsin menu
@@ -8,6 +9,7 @@ import BillsBuddy.util as util
 # TODO allow for multiple bb_paths - requires system/user settings file seperation first
 # TODO download latest tooling force if missing + update option + hot update like chrome?
 # TODO find tooling-force jar with a methid - os.listdir('.')
+# TODO downloader must be threaded too but hold the application until complete..
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
@@ -18,7 +20,7 @@ class ToolingForce(threading.Thread):
         self.args = args
 
     def run(self):
-        command_args = ['java', '-jar', 'tooling-force.com-0.3.4.2.jar',
+        command_args = ['java', '-jar', 'tooling-force.jar',
                         '--config=' + self.settings.get('bb_config'),
                         '--projectPath=' + self.settings.get('bb_path'),
                         '--responseFilePath=/tmp/billResponseFile',
