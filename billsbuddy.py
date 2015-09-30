@@ -28,7 +28,7 @@ class ToolingForce(threading.Thread):
                 break
             print(buf.rstrip().decode("utf-8")),
 
-        print(open('/tmp/billResponseFile','r'))
+        print(open('/tmp/billResponseFile','r').read())
 
 
 class BillDeployCommand(sublime_plugin.TextCommand):
