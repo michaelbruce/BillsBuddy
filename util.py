@@ -1,4 +1,4 @@
-import sublime
+import sublime, sublime_plugin
 import os
 import subprocess, json
 from urllib.request import urlopen

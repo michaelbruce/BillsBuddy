@@ -1,5 +1,5 @@
 import sublime, sublime_plugin, os, subprocess, threading
-import BillsBuddy.util as util
+from BillsBuddy import util
 
 class ToolingForce(threading.Thread):
     def __init__(self, args):
@@ -32,13 +32,21 @@ class ToolingForce(threading.Thread):
 
 class BillDeployCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        print('=== Pushing to <org_name> ===')
-        ToolingForce('--action=deploySpecificFiles')
+        filename = os.path.basename(util.get_active_file())
+        print('=== Pushing ' + filename + ' to SingletrackDev ===')
+        self.create_meta_file()
+        t = ToolingForce('--action=deploySpecificFiles --specificFiles=/tmp/currentFile')
+        t.start()
+
+    def create_meta_file(self):
+        filename = util.get_active_file().split('SingletrackDev/')[1]
+        meta_file = open('/tmp/currentFile', 'w')
+        meta_file.write("{0}\n{0}-meta.xml".format(filename))
 
 class BillTestCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
-        print('=== Running test ' + filename + ' to <org_name> ===')
+        filename = os.path.splitext(os.path.basename(util.get_active_file()))[0]
+        print('=== Running test ' + filename + ' to SingletrackDev ===')
         t = ToolingForce('--action=runTestsTooling --async=true --testsToRun='
                 + filename)
         t.start()
@@ -47,7 +55,7 @@ class BillTestSingleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         filename = os.path.splitext(os.path.basename(self.view.file_name()))[0]
         method_name = self.get_current_function(self.view)
-        print('=== Running test method ' + method_name + ' to <org_name> ===')
+        print('=== Running test method ' + method_name + ' to SingletrackDev ===')
         t = ToolingForce('--action=runTestsTooling --async=true --testsToRun='
                 + filename + '.' + method_name)
         t.start()
