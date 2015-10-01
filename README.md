@@ -1,6 +1,23 @@
 ## Bills Buddy
 
-A force.com sublime plugin using neowit's tooling-force.com project
+A sublime plugin used to deploy and test files on salesforce.
+
+It uses neowit's tooling-force.com project to do this.
+
+##### Installation instructions
+
+1. Press `cmd + shift + p` to bring up sublime commands prompt.
+2. Type `add repo` and paste this link in: `https://github.com/michaelbruce/BillsBuddy.git`
+3. Press `cmd + shift + p` again.
+4. This time, type in `install package` and search for BillsBuddy.
+
+At this point BillsBuddy will be installed, now you need to create a build.properties file to start using it. It should be a text file containing the following lines:
+
+> sf.username = username@companyname.com  
+> sf.password = password_with_security_token  
+> sf.serverurl = https://login.salesforce.com 
+
+Finally, select `Configure Settings` the BillsBuddy dropdown and change the `bb_config` option to point at the location of your build.properties file.
 
 ##### Scraps/TODOs
 
