@@ -14,6 +14,7 @@ A force.com sublime plugin using neowit's tooling-force.com project
      TODO find tooling-force jar with a methid - os.listdir('.')
      TODO downloader must be threaded too but hold the application until complete..
      TODO invalid/corrupt jar file...
+     TODO missing tmp billResponse file? related to missing creds?
 
      WIP
      class SyntaxHandler(sublime_plugin.EventListener):

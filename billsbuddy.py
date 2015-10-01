@@ -28,7 +28,11 @@ class ToolingForceWrapper(threading.Thread):
                 break
             print(buf.rstrip().decode("utf-8")),
 
-        print(open('/tmp/billResponseFile','r').read())
+        if os.path.isfile('/tmp/billResponseFile'):
+            print(open('/tmp/billResponseFile','r').read())
+            os.remove('/tmp/billResponseFile')
+        else:
+            print("The operation failed, most likely because there is no credentials file assigned to bb_config")
 
 class BillDeployCommand(sublime_plugin.TextCommand):
     def run(self, edit):
