@@ -1,6 +1,7 @@
 import sublime, sublime_plugin, os
 from os.path import expanduser
 from BillsBuddy import util
+from BillsBuddy.toolingforcewrapper import ToolingForceWrapper
 
 class BillDeployCommand(sublime_plugin.TextCommand):
     def run(self, edit):
